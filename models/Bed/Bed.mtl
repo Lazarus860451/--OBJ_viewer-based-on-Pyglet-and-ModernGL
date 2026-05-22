@@ -1,0 +1,22 @@
+# Material file for bed model
+
+newmtl None
+map_Kd bed_frame.jpeg
+
+newmtl None_Matress_Top_Diffuse
+map_Kd matress_top_diffuse.jpeg
+
+newmtl None_Pillows_Top_Diffuse
+map_Kd pillows_top_diffuse.jpeg
+
+newmtl None_Blanket_Top_Diffuse
+map_Kd blanket_top_diffuse.jpeg
+
+newmtl None_Untitled
+map_Kd bed_frame.jpeg
+
+newmtl None_Blanket_Bottom_Diffuse
+map_Kd blanket_bottom_diffuse.jpeg
+
+newmtl None_Pillows_Bottom_Diffuse
+map_Kd pillows_top_diffuse.jpeg
