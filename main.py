@@ -1,9 +1,7 @@
 import pyglet
 import sys
-import obj_loader
-import renderer
-import camera
-from test import start_timer, end_timer, print_all_timings
+from src import camera, obj_loader, renderer
+from src.timer import start_timer, end_timer, print_all_timings
 
 
 class OBJViewer:

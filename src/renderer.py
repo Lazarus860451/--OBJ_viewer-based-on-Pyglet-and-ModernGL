@@ -1,10 +1,10 @@
 import moderngl as mgl
 import numpy as np
 import pyglet
-import shaders
+from src import shaders
 import os
 import glob
-from test import start_timer, end_timer
+from src.timer import start_timer, end_timer
 
 
 class Renderer:
@@ -81,10 +81,11 @@ class Renderer:
         for mat_name in self.materials:
             print("  Material:", mat_name, "->", self.materials[mat_name])
 
-
         # get all image files in directory
         image_files = {}
-        image_extensions = ['*.jpg', '*.jpeg', '*.png', '*.JPG', '*.JPEG', '*.PNG']
+        image_extensions = [
+            '*.jpg', '*.jpeg', '*.png', '*.JPG', '*.JPEG', '*.PNG'
+        ]
 
         for ext in image_extensions:
             pattern = os.path.join(self.model_dir, ext)
@@ -128,7 +129,9 @@ class Renderer:
 
             # load texture
             if texture_path is not None and os.path.exists(texture_path):
-                print("Material [", mat_name, "] loading texture:", texture_path)
+                print(
+                    "Material [", mat_name, "] loading texture:", texture_path
+                )
                 try:
                     img = pyglet.image.load(texture_path)
                     texture_data = img.get_image_data()
@@ -141,12 +144,14 @@ class Renderer:
                     tex.filter = (mgl.LINEAR, mgl.LINEAR)
                     self.material_textures[mat_name] = tex
                     print("  Texture loaded! Size:", width, "x", height)
-                except:
-                    print("  Texture load failed:", texture_path)
+                except Exception as e:
+                    print("  Texture load failed:", e, texture_path)
                     self.material_textures[mat_name] = None
             else:
                 self.material_textures[mat_name] = None
-                print("Material [", mat_name, "] no texture found, using color render")
+                print(
+                    "Material [", mat_name, "] no texture, using color render"
+                )
 
         loaded_count = 0
         for mat_name in self.material_textures:
@@ -200,6 +205,8 @@ class Renderer:
 
             # prevent index out of range
             try:
-                self.vao.render(mgl.TRIANGLES, vertices=start_index, first=index_count)
-            except:
-                print("Render error for material group:", mat_name)
+                self.vao.render(
+                    mgl.TRIANGLES, vertices=start_index, first=index_count
+                )
+            except Exception as e:
+                print("Render error for material group:", e, mat_name)

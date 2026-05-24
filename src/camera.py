@@ -63,7 +63,11 @@ class Camera:
         forward_y = center_y - eye_y
         forward_z = center_z - eye_z
 
-        length = math.sqrt(forward_x*forward_x + forward_y*forward_y + forward_z*forward_z)
+        length = math.sqrt(
+            forward_x*forward_x +
+            forward_y*forward_y +
+            forward_z*forward_z
+        )
         if length > 0.0001:
             forward_x = forward_x / length
             forward_y = forward_y / length

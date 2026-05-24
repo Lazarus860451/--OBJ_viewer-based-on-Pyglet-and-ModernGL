@@ -1,6 +1,5 @@
 import time
 
-
 timings = {}
 
 
@@ -26,7 +25,10 @@ def print_all_timings():
 
     total = 0
 
-    order = ['Window create', 'Model load', 'Shader compile', 'Texture load', 'Renderer init', 'Total init']
+    order = [
+        'Window create', 'Model load', 'Shader compile',
+        'Texture load', 'Renderer init', 'Total init'
+        ]
     for name in order:
         if name in timings:
             print(f"  {name:12}: {timings[name]:.3f} seconds")

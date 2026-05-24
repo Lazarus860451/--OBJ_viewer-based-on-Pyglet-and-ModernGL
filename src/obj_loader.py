@@ -1,6 +1,6 @@
 import numpy as np
 import os
-from test import start_timer, end_timer
+from src.timer import start_timer, end_timer
 
 
 def load_obj(filepath):
@@ -17,7 +17,9 @@ def load_obj(filepath):
     tex_indices = []
 
     # material groups
-    material_groups = []  # {'name': material name, 'start': start index, 'end': end index}
+    material_groups = []  # {'name': material name,
+    # 'start': start index,
+    # 'end': end index}
     current_material = None
     current_start = 0
 
@@ -27,7 +29,7 @@ def load_obj(filepath):
 
     # material info
     materials = {}
-    mtl_file = None
+    # mtl_file = None "flake8 said never used, maybe really useless"
 
     f = open(filepath, 'r', encoding='utf-8')
     lines = f.readlines()
@@ -84,8 +86,8 @@ def load_obj(filepath):
                 vertices[v_count * 3 + 1] = y
                 vertices[v_count * 3 + 2] = z
                 v_count = v_count + 1
-            except:
-                print("Warning: skipping bad vertex data", line)
+            except Exception as e:
+                print("Warning: skipping bad vertex data:", e, line)
 
         elif cmd == 'vt':
             try:
@@ -96,8 +98,8 @@ def load_obj(filepath):
                 texcoords[vt_count * 2] = u
                 texcoords[vt_count * 2 + 1] = v
                 vt_count = vt_count + 1
-            except:
-                print("Warning: skipping bad texture coordinate", line)
+            except Exception as e:
+                print("Warning: skipping bad texture coordinate", e, line)
 
         elif cmd == 'f':
             try:
@@ -136,16 +138,22 @@ def load_obj(filepath):
                     else:
                         temp_texcoords.append(-1)
 
-                    indices[f_count * 3] = temp_vertices[temp_v_count - 3]
-                    indices[f_count * 3 + 1] = temp_vertices[temp_v_count - 1]
-                    indices[f_count * 3 + 2] = temp_vertices[temp_v_count]
-                    tex_indices[f_count * 3] = temp_texcoords[temp_v_count - 3]
-                    tex_indices[f_count * 3 + 1] = temp_texcoords[temp_v_count - 1]
-                    tex_indices[f_count * 3 + 2] = temp_texcoords[temp_v_count]
+                    indices[f_count * 3] = (
+                        temp_vertices)[temp_v_count - 3]
+                    indices[f_count * 3 + 1] = (
+                        temp_vertices)[temp_v_count - 1]
+                    indices[f_count * 3 + 2] = (
+                        temp_vertices)[temp_v_count]
+                    tex_indices[f_count * 3] = (
+                        temp_texcoords)[temp_v_count - 3]
+                    tex_indices[f_count * 3 + 1] = (
+                        temp_texcoords)[temp_v_count - 1]
+                    tex_indices[f_count * 3 + 2] = (
+                        temp_texcoords)[temp_v_count]
                     f_count = f_count + 1
                     temp_v_count = temp_v_count + 1
-            except:
-                print("Warning: skipping bad face data", line)
+            except Exception as e:
+                print("Warning: skipping bad face data", e, line)
 
     # check if we got any vertex or face
     if v_count == 0:
@@ -205,9 +213,12 @@ def load_obj(filepath):
     colors_array[2::3] = gray
 
     # calculate center point
-    center_x = (np.min(vertices_array[0::3]) + np.max(vertices_array[0::3])) / 2
-    center_y = (np.min(vertices_array[1::3]) + np.max(vertices_array[1::3])) / 2
-    center_z = (np.min(vertices_array[2::3]) + np.max(vertices_array[2::3])) / 2
+    center_x = (np.min(vertices_array[0::3]) +
+                np.max(vertices_array[0::3])) / 2
+    center_y = (np.min(vertices_array[1::3]) +
+                np.max(vertices_array[1::3])) / 2
+    center_z = (np.min(vertices_array[2::3]) +
+                np.max(vertices_array[2::3])) / 2
 
     # calculate size for auto camera distance
     size_x = np.max(vertices_array[0::3]) - np.min(vertices_array[0::3])
@@ -222,7 +233,11 @@ def load_obj(filepath):
     print("Model center:", (center_x, center_y, center_z))
     print("Model size:", model_size)
     for group in material_groups:
-        print("  Material:", group['name'], "Triangle range:", group['start'], "-", group['end'])
+        print(
+            "  Material:", group['name'],
+            "Triangle range:", group['start'],
+            "-", group['end']
+        )
 
     data = {
         'vertices': vertices_array,
@@ -277,8 +292,8 @@ def load_mtl(mtl_path):
                 g = float(parts[2])
                 b = float(parts[3])
                 materials[current_material]['Kd'] = (r, g, b)
-            except:
-                print("Warning: skipping bad Kd value", line)
+            except Exception as e:
+                print("Warning: skipping bad Kd value", e, line)
 
     f.close()
 
