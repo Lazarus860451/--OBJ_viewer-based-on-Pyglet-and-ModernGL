@@ -7,6 +7,7 @@ project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 
 class TestSystem:
     # T01-T04,T11-T18 need GUI,skip in githubCI
+
     def test_T05_parse_vertices(self):
         obj_path = os.path.join(project_root, 'models', 'cube.obj')
         if not os.path.exists(obj_path):
@@ -43,7 +44,9 @@ class TestSystem:
         print("✓ T08 passed / T08 пройден")
 
     def test_T09_parse_mtl(self):
-        mtl_path = os.path.join(project_root, 'models', 'paimon', 'o5131fbilmlm.mtl')
+        mtl_path = os.path.join(
+            project_root, 'models', 'paimon', 'o5131fbilmlm.mtl'
+        )
         if not os.path.exists(mtl_path):
             pytest.skip("MTL file not found")
         materials = obj_loader.load_mtl(mtl_path)
