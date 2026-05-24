@@ -8,7 +8,6 @@ project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 class TestSystem:
     # T01-T04,T11-T18 need GUI,skip in githubCI
 
-
     def test_T05_parse_vertices(self):
         obj_path = os.path.join(project_root, 'models', 'cube.obj')
         if not os.path.exists(obj_path):
